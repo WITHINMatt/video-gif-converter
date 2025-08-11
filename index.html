@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video to GIF Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>Video to GIF Converter</h1>
+                    <p>Convert your videos to optimized GIFs with batch processing</p>
+                </div>
+                <button class="btn btn-secondary debug-btn" id="debugBtn" title="Check FFmpeg Status">🔧 Debug</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- File Input Section -->
+            <section class="file-input-section">
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content">
+                        <div class="drop-icon">📹</div>
+                        <h3>Drop video files here</h3>
+                        <p>or</p>
+                        <button class="btn btn-primary" id="selectFilesBtn">Choose Files</button>
+                        <div class="supported-formats">
+                            <small>Supported formats: MP4, MOV, AVI, MKV, WMV, FLV, WebM, M4V</small>
+                        </div>
+                    </div>
+                    <!-- Drop zone notification overlay -->
+                    <div class="drop-zone-notification" id="dropZoneNotification">
+                        <div class="notification-icon">✅</div>
+                        <div class="notification-text" id="notificationText">Added to queue!</div>
+                        <div class="notification-subtext" id="notificationSubtext">Ready for conversion</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="settings-section">
+                <h3>Conversion Settings</h3>
+                <div class="aspect-ratio-notice">
+                    <small>🔒 <strong>Aspect ratio is always preserved</strong> - your videos won't be stretched or distorted</small>
+                </div>
+                <div class="settings-grid">
+                    <!-- Resolution Settings -->
+                    <div class="setting-group">
+                        <label for="resolutionSelect">Resolution:</label>
+                        <select id="resolutionSelect" class="setting-control">
+                            <option value="original">📏 Original (Keep source size)</option>
+                            
+                            <optgroup label="🌟 Recommended Presets">
+                                <option value="web-medium" selected>🌐 Web Medium (720x405) - Best for blogs & websites</option>
+                                <option value="mobile">📱 Mobile Optimized (640x360) - Perfect for mobile viewing</option>
+                                <option value="email">📧 Email Friendly (320x180) - Small size for emails</option>
+                            </optgroup>
+                            
+                            <optgroup label="📱 Social Media">
+                                <option value="instagram-post">📸 Instagram Post (1080x1080) - Square format</option>
+                                <option value="instagram-story">📖 Instagram Story (1080x1920) - Vertical format</option>
+                                <option value="twitter">🐦 Twitter (1280x720) - Timeline optimized</option>
+                            </optgroup>
+                            
+                            <optgroup label="🌐 Web & General Use">
+                                <option value="web-small">🚀 Web Small (480x270) - Fast loading</option>
+                                <option value="web-large">💎 Web Large (1280x720) - High quality web</option>
+                                <option value="hd">🎬 HD Quality (1920x1080) - Maximum quality</option>
+                            </optgroup>
+                            
+                            <optgroup label="📏 Standard Sizes">
+                                <option value="720p">📺 720p (1280x720) - HD standard</option>
+                                <option value="480p">📺 480p (854x480) - SD standard</option>
+                                <option value="360p">📺 360p (640x360) - Basic quality</option>
+                            </optgroup>
+                            
+                            <optgroup label="🔧 Special Use">
+                                <option value="ultra-compact">🗜️ Ultra Compact (240x135) - Absolute smallest</option>
+                                <option value="custom">⚙️ Custom Dimensions</option>
+                            </optgroup>
+                        </select>
+                        <div class="preset-description" id="presetDescription">
+                            <small>📝 Best balance of quality and file size for most web uses</small>
+                        </div>
+                    </div>
+
+                    <!-- Custom Resolution (hidden by default) -->
+                    <div class="setting-group custom-resolution" id="customResolution" style="display: none;">
+                        <label>Custom Size:</label>
+                        <div class="custom-size-inputs">
+                            <input type="number" id="customWidth" placeholder="Width" min="100" max="1920">
+                            <span>×</span>
+                            <input type="number" id="customHeight" placeholder="Height" min="100" max="1080">
+                        </div>
+                    </div>
+
+                    <!-- Quality Settings -->
+                    <div class="setting-group">
+                        <label for="qualitySelect">Quality & Compression:</label>
+                        <select id="qualitySelect" class="setting-control">
+                            <option value="ultra-high">🏆 Ultra High (20fps, 256 colors) - Maximum quality</option>
+                            <option value="high">🎯 High Quality (15fps, 256 colors) - Excellent quality</option>
+                            <option value="medium" selected>⚡ Balanced (12fps, 128 colors) - Great quality, reasonable size</option>
+                            <option value="low">🗜️ Compact (10fps, 64 colors) - Good quality, small size</option>
+                            <option value="ultra-low">📱 Ultra Compact (8fps, 32 colors) - Smallest possible</option>
+                        </select>
+                        <div class="quality-description">
+                            <small>💡 Higher quality = larger file size. Balanced is recommended for most uses.</small>
+                        </div>
+                    </div>
+
+                    <!-- Output Directory -->
+                    <div class="setting-group">
+                        <label for="outputPath">Output Folder:</label>
+                        <div class="output-path-control">
+                            <input type="text" id="outputPath" readonly placeholder="Same as source files">
+                            <button class="btn btn-secondary" id="selectOutputBtn">Browse</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- File List Section -->
+            <section class="file-list-section">
+                <div class="section-header">
+                    <h3>Files to Convert</h3>
+                    <div class="file-list-actions">
+                        <button class="btn btn-secondary" id="clearAllBtn" disabled>Clear All</button>
+                        <button class="btn btn-success" id="convertAllBtn" disabled>Convert All</button>
+                    </div>
+                </div>
+                <div class="file-list" id="fileList">
+                    <div class="empty-state">
+                        <p>No files selected. Add some videos to get started!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Progress Modal -->
+        <div class="modal" id="progressModal" style="display: none;">
+            <div class="modal-content">
+                <h3>Converting Files...</h3>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0%</div>
+                </div>
+                <div class="current-file" id="currentFile">Preparing conversion...</div>
+                <div class="conversion-stats" id="conversionStats">0 of 0 files completed</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
