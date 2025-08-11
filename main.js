@@ -24,16 +24,20 @@ function setupFFmpegPaths() {
       console.log('Resources path:', process.resourcesPath);
       
       // Try multiple possible locations for packaged app
+      const ffmpegExecutable = process.platform === 'win32' ? 'ffmpeg.exe' : 'ffmpeg';
+      const ffprobeExecutable = process.platform === 'win32' ? 'ffprobe.exe' : 'ffprobe';
+      
       const possibleFFmpegPaths = [
-        path.join(process.resourcesPath, 'app.asar.unpacked', 'node_modules', 'ffmpeg-static', 'ffmpeg'),
-        path.join(process.resourcesPath, 'ffmpeg-static', 'ffmpeg'),
-        path.join(process.resourcesPath, 'ffmpeg-static', 'bin', process.platform, process.arch, 'ffmpeg'),
+        path.join(process.resourcesPath, 'app.asar.unpacked', 'node_modules', 'ffmpeg-static', ffmpegExecutable),
+        path.join(process.resourcesPath, 'app.asar.unpacked', 'node_modules', 'ffmpeg-static', 'bin', process.platform, process.arch, ffmpegExecutable),
+        path.join(process.resourcesPath, 'ffmpeg-static', ffmpegExecutable),
+        path.join(process.resourcesPath, 'ffmpeg-static', 'bin', process.platform, process.arch, ffmpegExecutable),
         require('ffmpeg-static')
       ];
       
       const possibleFFprobePaths = [
-        path.join(process.resourcesPath, 'app.asar.unpacked', 'node_modules', 'ffprobe-static', 'bin', process.platform, process.arch, 'ffprobe'),
-        path.join(process.resourcesPath, 'ffprobe-static', 'bin', process.platform, process.arch, 'ffprobe'),
+        path.join(process.resourcesPath, 'app.asar.unpacked', 'node_modules', 'ffprobe-static', 'bin', process.platform, process.arch, ffprobeExecutable),
+        path.join(process.resourcesPath, 'ffprobe-static', 'bin', process.platform, process.arch, ffprobeExecutable),
         require('ffprobe-static').path
       ];
       
@@ -74,10 +78,13 @@ function setupFFmpegPaths() {
     
     // Verify and set paths
     if (ffmpegPath && fs.existsSync(ffmpegPath)) {
-      try {
-        fs.chmodSync(ffmpegPath, '755');
-      } catch (chmodError) {
-        console.log('Could not set execute permissions on FFmpeg:', chmodError.message);
+      // Only set chmod on Unix-like systems
+      if (process.platform !== 'win32') {
+        try {
+          fs.chmodSync(ffmpegPath, '755');
+        } catch (chmodError) {
+          console.log('Could not set execute permissions on FFmpeg:', chmodError.message);
+        }
       }
       
       ffmpeg.setFfmpegPath(ffmpegPath);
@@ -88,10 +95,13 @@ function setupFFmpegPaths() {
     }
     
     if (ffprobePath && fs.existsSync(ffprobePath)) {
-      try {
-        fs.chmodSync(ffprobePath, '755');
-      } catch (chmodError) {
-        console.log('Could not set execute permissions on FFprobe:', chmodError.message);
+      // Only set chmod on Unix-like systems
+      if (process.platform !== 'win32') {
+        try {
+          fs.chmodSync(ffprobePath, '755');
+        } catch (chmodError) {
+          console.log('Could not set execute permissions on FFprobe:', chmodError.message);
+        }
       }
       
       ffmpeg.setFfprobePath(ffprobePath);
