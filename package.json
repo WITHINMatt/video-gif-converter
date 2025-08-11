@@ -1,6 +1,6 @@
 {
   "name": "video-to-gif-converter",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "A simple video to GIF converter with batch processing",
   "main": "main.js",
   "scripts": {
