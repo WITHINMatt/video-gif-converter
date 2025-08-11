@@ -9,6 +9,7 @@
     "build": "electron-builder",
     "dist": "electron-builder --publish=never",
     "dist-mac": "electron-builder --mac --publish=never",
+    "dist-win": "electron-builder --win --publish=never",
     "dist-dir": "electron-builder --mac --dir",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -32,9 +33,7 @@
     "files": [
       "**/*",
       "!node_modules/ffmpeg-static/bin/linux/**",
-      "!node_modules/ffmpeg-static/bin/win32/**",
-      "!node_modules/ffprobe-static/bin/linux/**",
-      "!node_modules/ffprobe-static/bin/win32/**"
+      "!node_modules/ffprobe-static/bin/linux/**"
     ],
     "asarUnpack": [
       "node_modules/ffmpeg-static/**/*",
@@ -53,6 +52,26 @@
       "title": "${productName}",
       "icon": false,
       "format": "ULFO"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64", "ia32"]
+        }
+      ],
+      "icon": false,
+      "publisherName": "Video to GIF Converter"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": false,
+      "uninstallerIcon": false,
+      "installerHeaderIcon": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
