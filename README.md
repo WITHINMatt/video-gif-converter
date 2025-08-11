@@ -28,7 +28,8 @@ A powerful and user-friendly desktop application for converting videos to optimi
 1. Download the latest `Video to GIF Converter-1.0.0.dmg` from the [Releases page](https://github.com/WITHINMatt/video-gif-converter/releases)
 2. Open the DMG file
 3. Drag the app to your Applications folder
-4. Launch from Applications or Spotlight
+4. **First Launch**: Right-click the app and choose "Open" to bypass the security warning (only needed once)
+5. **Be Patient**: The initial launch might take about 15 seconds, but after that, you're all set!
 
 ### Option 2: Build from Source
 ```bash
@@ -100,7 +101,8 @@ npm run build
 ## 🐛 Troubleshooting
 
 ### App Won't Open
-- Right-click the app and select "Open" to bypass Gatekeeper
+- **First time**: Right-click the app and select "Open" to bypass Gatekeeper (only needed once)
+- **Slow start**: Initial launch takes ~15 seconds - this is normal!
 - Check System Preferences > Security & Privacy if blocked
 
 ### Conversion Fails
