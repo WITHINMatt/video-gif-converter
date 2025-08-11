@@ -1,8 +1,8 @@
 # Video to GIF Converter
 
-A powerful and user-friendly desktop application for converting videos to optimized GIFs with batch processing support. Built with Electron and FFmpeg for reliable, high-quality conversions on macOS.
+A powerful and user-friendly desktop application for converting videos to optimized GIFs with batch processing support. Built with Electron and FFmpeg for reliable, high-quality conversions on Windows and macOS.
 
-![Video to GIF Converter](https://img.shields.io/badge/platform-macOS-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Electron](https://img.shields.io/badge/built%20with-Electron-47848F)
+![Video to GIF Converter](https://img.shields.io/badge/platform-Windows%20%7C%20macOS-blue) ![License](https://img.shields.io/badge/license-MIT-green) ![Electron](https://img.shields.io/badge/built%20with-Electron-47848F)
 
 ## ✨ Features
 
@@ -14,18 +14,32 @@ A powerful and user-friendly desktop application for converting videos to optimi
 - **🗂️ Flexible Output**: Choose custom output directories or use source locations
 - **⚡ Fast Processing**: Powered by FFmpeg for efficient conversions
 - **🖱️ Drag & Drop**: Simple drag-and-drop interface
+- **🌐 Cross-Platform**: Available for both Windows and macOS
 
 ## 📋 System Requirements
 
-- **macOS**: 10.15 (Catalina) or later
+### Windows
+- **OS**: Windows 10 or later (Windows 11 recommended)
+- **Architecture**: x64 or x86 (32-bit)
+- **Memory**: 4GB RAM minimum, 8GB recommended
+- **Storage**: 100MB for app installation + space for converted files
+
+### macOS
+- **OS**: macOS 10.15 (Catalina) or later
 - **Architecture**: Intel x64 or Apple Silicon (M1/M2)
 - **Memory**: 4GB RAM minimum, 8GB recommended
 - **Storage**: 100MB for app installation + space for converted files
 
 ## 🚀 Installation
 
-### Option 1: Download Release (Recommended)
-1. Download the latest `Video to GIF Converter-1.0.0.dmg` from the [Releases page](https://github.com/WITHINMatt/video-gif-converter/releases)
+### Windows Installation
+1. Download `Video to GIF Converter Setup 1.0.0.exe` from the [Releases page](https://github.com/WITHINMatt/video-gif-converter/releases)
+2. Run the installer (Windows may show a security warning - click "More info" → "Run anyway")
+3. Choose installation directory or use default
+4. Launch from Start Menu or Desktop shortcut
+
+### macOS Installation  
+1. Download `Video to GIF Converter-1.0.0.dmg` from the [Releases page](https://github.com/WITHINMatt/video-gif-converter/releases)
 2. Open the DMG file
 3. Drag the app to your Applications folder
 4. **First Launch**: Right-click the app and choose "Open" to bypass the security warning (only needed once)
@@ -45,6 +59,10 @@ npm start
 
 # Build for production
 npm run build
+
+# Build for specific platforms
+npm run dist-mac    # macOS DMG
+npm run dist-win    # Windows installer
 ```
 
 ## 🎯 Preset Guide
@@ -141,12 +159,13 @@ If you encounter any issues or have questions:
 
 1. Check the [Issues](https://github.com/WITHINMatt/video-gif-converter/issues) page for known problems
 2. Create a new issue with detailed information about your problem
-3. Include your macOS version, app version, and steps to reproduce
+3. Include your OS version (Windows/macOS), app version, and steps to reproduce
 
 ## 🔄 Version History
 
-- **v1.0.0** - Initial release with batch processing and preset support
+- **v1.1.0** - Windows support added with cross-platform compatibility
+- **v1.0.0** - Initial macOS release with batch processing and preset support
 
 ---
 
-Made with ❤️ for the macOS community
+Made with ❤️ for the cross-platform community
